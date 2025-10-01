@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+     
+<body>
+      <button id="bUt"></button>
+    <style>
+       #bUt{
+          height: 50px;
+          width: 100px;
+          padding: 0;
+       }
+       #bUt h5{
+          color: red;
+          font-size: 11px;
+       }
+       
+    </style>
+     <script>
+        var ad=document.getElementById("bUt");//元素对象
+        var nh5=document.createElement("h5");
+        nh5.textContent=("点击获取");
+        ad.appendChild(nh5);
+        //api :https://randomuser.me/api/
+        ad.addEventListener('click',function(){
+            const p=new Promise((resolve,reject)=>{
+               //1创建对象
+            const xhr=new XMLHttpRequest();
+            //2初始化
+            xhr.open('GET','https://randomuser.me/api/');
+            //3发送
+            xhr.send();
+            //4处理事件响应结果
+            xhr.onreadystatechange=function(){
+                if(xhr.readyState === 4){
+                    //判断响应状态码
+                    if(xhr.status>=200&&xhr.status<300){
+                        //控制台输出响应体
+                       // console.log(xhr.response);
+                       resolve(xhr.response)
+                    }else{
+                        //控制台输出响应状态码
+                        //console.log(xhr.status);
+                        reject(xhr.status)
+                    }
+                }
+            }
+            })
+         p.then((data)=>{
+             console.log(data);
+         },(error)=>{
+           console.log(error);
+         })
+        })
+     </script>
+</body>
+</html>
+
+
+ 

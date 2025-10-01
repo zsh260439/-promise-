@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+     
+<body>
+      <button id="bUt"></button>
+    <style>
+       #bUt{
+          height: 50px;
+          width: 100px;
+          padding: 0;
+       }
+       #bUt h5{
+          color: red;
+          font-size: 11px;
+       }
+       
+    </style>
+     <script>
+        var ad=document.getElementById("bUt");//元素对象
+        var nh5=document.createElement("h5");
+        nh5.textContent=("点击抽奖!!");
+        ad.appendChild(nh5);
+        //抽奖系统
+        function rand(m,n){
+             return Math.ceil(Math.random()*(n-m+1))+m-1;
+        }
+        ad.onclick=function(){
+          const pro=new Promise((resolve,reject)=>{
+                setTimeout(() => {
+            let n=rand(1,100);
+            if(n<=30){
+               resolve(n)
+            }else{
+               reject(n);
+            }
+           },1000);
+          })
+         //return pro;
+        pro.then((data)=>{
+            alert("恭喜中奖1000w 您的数字为"+data);
+        },(error)=>{
+            alert("再接再厉！您的数字为"+error)
+        })
+        }
+
+     </script>
+</body>
+</html>
+
+

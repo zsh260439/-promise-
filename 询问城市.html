@@ -1,0 +1,146 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/
+axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <style>
+        /* 全局容器：控制整体宽度、居中、内边距 */
+        .container {
+            font-family: "Microsoft Yahei", sans-serif;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 10px;
+        }
+
+        /* 行容器：用 Flex 实现水平排列 */
+        .row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        /* 标签样式：固定宽度、右对齐、间距 */
+        .label {
+            width: 80px;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        /* 输入框通用样式：边框、内边距、自适应宽度 */
+        .input1 {
+            flex: 1;
+            padding: 6px 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+         .input2 {
+            flex: 1;
+            padding: 6px 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+          .list-group {
+            list-style: none;
+            padding: 0;
+        }
+
+        .list-group-item {
+            margin-bottom: 5px;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+        /* 查询按钮样式：蓝色背景、 hover 效果 */
+        .query-btn {
+            background-color: #2e8ded;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .query-btn:hover {
+            background-color: #1e79d1;
+        }
+
+        /* 地区列表行：和上方行布局一致 */
+        .area-row {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        /* 地区显示框：模拟只读输入框样式 */
+        .area-display {
+            flex: 1;
+            padding: 6px 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            /* 浅灰背景表示“只读” */
+        }
+    </style>
+    <div class="container">
+        <!-- 省/市 + 城市 行 -->
+        <div class="row">
+            <span class="label">省/市/名字</span>
+            <input type="text" class="input1">
+            <span class="label">城市名字</span>
+            <input type="text" class="input2">
+        </div>
+        <!-- 查询按钮行 -->
+        <div class="row">
+            <span class="label"></span> <!-- 空标签用于和上方输入框“对齐” -->
+            <button class="query-btn">查询</button>
+        </div>
+        <!-- 地区列表行 -->
+        <br><br>
+        <p>地区列表:</p>
+        <ul class="list-group">
+           
+        </ul>
+    </div>
+
+    <script>
+        document.querySelector(".query-btn").addEventListener('click', function () {
+            let pname = document.querySelector(".input1").value;
+            let cname = document.querySelector(".input2").value;
+            axios({
+                url: 'http://hmajax.itheima.net/api/area',
+                params: {
+                    pname,
+                    cname
+                }
+            }).then((val) => {
+                let e = val.data.list
+                console.log(e);
+                /*1：let theli = e.map(areaName => `<li class="list-group-item">${areaName}</li>`).join('') 通过map创建
+                console.log(theli);
+                document.querySelector(".list-group").innerHTML = theli;
+                */
+               //2:直接添加
+               let sq = document.querySelector(".list-group");
+               sq.innerHTML = '';
+               e.forEach(item => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.textContent = item;
+                    sq.appendChild(li);
+               });
+            })
+        })
+    </script>
+</body>
+
+</html>
